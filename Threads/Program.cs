@@ -61,10 +61,10 @@ namespace Threads
 
                 if (car.DistanceTraveled >= race.RaceDistance)
                 {
-                    //lock (distanceLock)
-                    //{
+                    lock (distanceLock)
+                    {
                     car.DistanceTraveled -= race.RaceDistance;
-                    //}
+                    }
 
                     await Console.Out.WriteLineAsync($"{car.Name} finished!");
                     raceIsRunning = false;
@@ -75,11 +75,11 @@ namespace Threads
                     await Race.RaceSetbacksAsync(car);
 
                     int distanceCovered = (int)(car.SpeedPerHour * stopwatch.Elapsed.TotalSeconds);
-                    //lock (distanceLock)
-                    //{
+                    lock (distanceLock)
+                    {
 
                     car.DistanceTraveled += distanceCovered;
-                    //}
+                    }
                     stopwatch.Reset();
                 }
 
