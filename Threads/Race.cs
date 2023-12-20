@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -83,11 +83,11 @@ namespace Threads
         {
             Task winningTask = await Task.WhenAny(task1, task2);
 
-            if (winningTask == task1)
+            if (winningTask == task1 && task1.IsCompletedSuccessfully)
             {
                 await Console.Out.WriteLineAsync($"Scraps On Wheels is the winner!");
             }
-            else if (winningTask == task2)
+            else if (winningTask == task2 && task2.IsCompletedSuccessfully)
             {
                 await Console.Out.WriteLineAsync($"Fender Bender is the winner!");
             }
