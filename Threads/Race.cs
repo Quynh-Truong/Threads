@@ -79,6 +79,7 @@ namespace Threads
             }
 
         }
+
         static public async Task RaceWinnerAsync(Task task1, Task task2)
         {
             Task winningTask = await Task.WhenAny(task1, task2);
@@ -90,6 +91,10 @@ namespace Threads
             else if (winningTask == task2 && task2.IsCompletedSuccessfully)
             {
                 await Console.Out.WriteLineAsync($"Fender Bender is the winner!");
+            }
+            else
+            {
+                await Console.Out.WriteLineAsync("Bonkers! It's a draw!");
             }
 
 
