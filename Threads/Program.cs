@@ -26,14 +26,13 @@ namespace Threads
                     if (Console.ReadKey(intercept: true).Key == ConsoleKey.Enter)
                     {
                         Console.Clear();
-                        await Race.GetUpdatesAsync(car1);
-                        await Race.GetUpdatesAsync(car2);
+                        await Task.WhenAll(Race.GetUpdatesAsync(car1), Race.GetUpdatesAsync(car2));
                     }
                 }
             }
 
 
-            Race.RaceWinnerAsync(task1, task2);
+            await Race.RaceWinnerAsync(task1, task2);
 
             Console.ReadLine();
 
@@ -53,11 +52,12 @@ namespace Threads
             await Console.Out.WriteLineAsync($"{car.Name} has started its treacherous race!");
 
 
+
             while (raceIsRunning)
             {
                 stopwatch.Start();
  
-                await Task.Delay(1000);
+                await Task.Delay(500);
 
                 car.DistanceTraveled = car.DistanceTraveled + car.SpeedPerHour;
 
@@ -66,6 +66,7 @@ namespace Threads
                     car.DistanceTraveled -= race.RaceDistance;
                     await Console.Out.WriteLineAsync($"{car.Name} finished!");
                     raceIsRunning = false;
+                    break;
                 }
  
 
@@ -75,6 +76,7 @@ namespace Threads
                     stopwatch.Restart();
                 }
             }
+          
         }
 
     }
